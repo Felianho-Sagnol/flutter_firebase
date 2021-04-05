@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "344097705843",
+    "project_id": "sagnosocialapp",
+    "storage_bucket": "sagnosocialapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344097705843:android:425cc1b0b309c89a79bf06",
+        "android_client_info": {
+          "package_name": "com.sagnol.sagnolapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344097705843-unlqami8hl3op51t6flrrkrvpvoo36ai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByigXQUbaN17TLFhF6RDtEZmTeLpzpfs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344097705843-unlqami8hl3op51t6flrrkrvpvoo36ai.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

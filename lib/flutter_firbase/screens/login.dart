@@ -24,6 +24,7 @@ class _LoginState extends State<Login> {
     ispass: true,
     error: "le mot de passe doit contenir au moins 6 caractères.",
   );
+  String erroMessage = "";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,16 +58,31 @@ class _LoginState extends State<Login> {
                       SizedBox(height: 20),
                       password.textFormField(),
                       SizedBox(height: 20),
+                      Text(
+                        (erroMessage.length != 0) ? erroMessage : "",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      SizedBox(height: 20),
                       RaisedButton(
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
-                            loading(context);
+                            //loading(context);
                             bool login = await auth.signIn(
                               email.value,
                               password.value,
                             );
                             if (login != null) {
-                              Navigator.of(context).pop();
+                              if (login) {
+                                //Navigator.of(context).pop();
+                              } else {
+                                setState(() {
+                                  erroMessage =
+                                      "Erreur : Verifiez bien que vous avez un compte avec cette adresse email et ce mot le mot de passe.";
+                                });
+                              }
                             }
                           }
                         },

@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sagnolapp/flutter_firbase/services/db.dart';
+import 'package:sagnolapp/flutter_firbase/models/user.dart';
 
 class AuthServices {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -23,20 +25,28 @@ class AuthServices {
     try {
       return auth.signOut();
     } catch (e) {
+      print("error de deconnexion");
       return null;
     }
   }
 
-  Future<bool> signUp(String email, String password) async {
+  Future<bool> signUp(String email, String password, String pseudo) async {
     try {
       final result = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      if (result != null) return true;
+      if (result.user != null) {
+        await DbServices().saveUser(UserModel(
+          id: result.user.uid,
+          email: result.user.email,
+          pseudo: pseudo,
+        ));
+        return true;
+      }
       return false;
     } catch (e) {
-      print("error de connextion " + e);
+      print("error de connextion lors de l'enregistrement " + e);
       return false;
     }
   }
@@ -47,10 +57,16 @@ class AuthServices {
         email: email,
         password: password,
       );
-      if (result != null) return true;
+      if (result.user != null) return true;
       return false;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email') {
+        // Do something :D
+        print("error de connextion lors de la connexion" + e.message);
+        return false;
+      }
     } catch (e) {
-      print("error de connextion " + e);
+      print("error de connextion lors de la connexion" + e.message);
       return false;
     }
   }

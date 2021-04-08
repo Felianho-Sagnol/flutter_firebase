@@ -24,6 +24,17 @@ class _RegisterState extends State<Register> {
     ispass: true,
     error: "enter a valid password.",
   );
+  CustomTextField cpass = CustomTextField(
+    title: "Comfirme Password",
+    placeholder: "Comfirme Password ...",
+    ispass: true,
+    error: "enter a valid password.",
+  );
+  CustomTextField pseudo = CustomTextField(
+    title: "Pseudo",
+    placeholder: "Password ...",
+    error: "enter a valid name.",
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +68,13 @@ class _RegisterState extends State<Register> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SizedBox(height: 10),
+                        pseudo.textFormField(),
+                        SizedBox(height: 20),
                         emailText.emailFormField(),
                         SizedBox(height: 20),
                         passText.textFormField(),
+                        SizedBox(height: 20),
+                        cpass.textFormField(),
                         SizedBox(height: 20),
                         RaisedButton(
                           onPressed: () async {
@@ -68,6 +83,7 @@ class _RegisterState extends State<Register> {
                               bool register = await auth.signUp(
                                 emailText.value,
                                 passText.value,
+                                pseudo.value,
                               );
                               if (register != null) {
                                 Navigator.of(context).pop();

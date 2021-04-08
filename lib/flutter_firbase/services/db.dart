@@ -3,6 +3,7 @@ import 'package:path/path.dart' as Path;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sagnolapp/flutter_firbase/models/user.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DbServices {
   final CollectionReference usercol =
@@ -48,5 +49,15 @@ class DbServices {
     } catch (e) {
       return null;
     }
+  }
+  //<>
+
+  Stream<UserModel> get getCurentUser {
+    final user = FirebaseAuth.instance.currentUser;
+    return user != null
+        ? usercol.doc(user.uid).snapshots().map(
+              (user) => UserModel.fromJson(user.data()),
+            )
+        : null;
   }
 }

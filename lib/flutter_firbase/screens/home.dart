@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:sagnolapp/flutter_firbase/services/auth.dart';
 import 'package:sagnolapp/flutter_firbase/services/db.dart';
 import 'package:sagnolapp/flutter_firbase/models/user.dart';
@@ -17,19 +18,20 @@ class _HomeState extends State<Home> {
   AuthServices auth = AuthServices();
   final key = GlobalKey<ScaffoldState>();
 
-  Future<void> getUser() async {
+  /*Future<void> getUser() async {
     User user = await auth.user;
     final userResult = await DbServices().getUser(user.uid);
     setState(() {
       userm = userResult;
       UserModel.current = userResult;
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     if (user_is_null) return Login();
-    getUser();
+    //getUser();
+    userm = Provider.of<UserModel>(context);
     return SafeArea(
       child: Scaffold(
         key: key,
@@ -46,8 +48,12 @@ class _HomeState extends State<Home> {
                   CircleAvatar(
                     radius: 14,
                     backgroundColor: Colors.white,
-                    backgroundImage:
-                        userm.image != null ? NetworkImage(userm.image) : null,
+                    backgroundImage: userm.image != null
+                        ? NetworkImage(userm.image)
+                        : Image(
+                            image:
+                                AssetImage('images/default-avatar-profile.jpg'),
+                          ),
                     child: userm.image != null
                         ? Container()
                         : Icon(

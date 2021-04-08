@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sagnolapp/flutter_firbase/models/user.dart';
 import 'package:sagnolapp/flutter_firbase/services/db.dart';
 import 'package:sagnolapp/flutter_firbase/services/utils/getImages.dart';
@@ -12,7 +13,8 @@ class _MenuState extends State<Menu> {
   bool loading = false;
   @override
   Widget build(BuildContext context) {
-    final user = UserModel.current;
+    //final user = UserModel.current;
+    final user = Provider.of<UserModel>(context);
     return Container(
       width: 200,
       color: Colors.white,
@@ -23,8 +25,11 @@ class _MenuState extends State<Menu> {
             accountEmail: Text(user.email ?? "Aucun email"),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
-              backgroundImage:
-                  user.image != null ? NetworkImage(user.image) : null,
+              backgroundImage: user.image != null
+                  ? NetworkImage(user.image)
+                  : Image(
+                      image: AssetImage('images/default-avatar-profile.jpg'),
+                    ),
               child: Stack(
                 children: [
                   if (user.image == null)
@@ -59,9 +64,10 @@ class _MenuState extends State<Menu> {
                               .uploadImage(data, path: "profil");
                           //print(urlImage);
                           if (urlImage != null) {
-                            UserModel.current.image = urlImage;
-                            bool isupdate = await DbServices()
-                                .updateUser(UserModel.current);
+                            final updateUser = user;
+                            updateUser.image = urlImage;
+                            bool isupdate =
+                                await DbServices().updateUser(updateUser);
                             if (isupdate) {
                               loading = false;
                               setState(() {});

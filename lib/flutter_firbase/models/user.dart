@@ -1,6 +1,5 @@
 class UserModel {
   String id, email, pseudo, image;
-  static UserModel current;
   UserModel({this.id, this.email, this.pseudo, this.image});
   factory UserModel.fromJson(Map<String, dynamic> j) => UserModel(
         email: j["email"],

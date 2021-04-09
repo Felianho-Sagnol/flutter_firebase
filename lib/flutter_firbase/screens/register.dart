@@ -18,23 +18,25 @@ class _RegisterState extends State<Register> {
     placeholder: "Email ...",
     error: "enter a valid email.",
   );
-  CustomTextField passText = CustomTextField(
+  CustomTextField pseudo = CustomTextField(
+    title: "Pseudo",
+    placeholder: "Pseudo ...",
+    error: "enter a valid name.",
+  );
+  CustomPassWordField passText = CustomPassWordField(
     title: "Password",
     placeholder: "Password ...",
     ispass: true,
     error: "enter a valid password.",
   );
-  CustomTextField cpass = CustomTextField(
+  CustomPassWordField cpass = CustomPassWordField(
     title: "Comfirme Password",
     placeholder: "Comfirme Password ...",
     ispass: true,
     error: "enter a valid password.",
   );
-  CustomTextField pseudo = CustomTextField(
-    title: "Pseudo",
-    placeholder: "Password ...",
-    error: "enter a valid name.",
-  );
+
+  String erroMessage = "";
 
   @override
   Widget build(BuildContext context) {
@@ -75,19 +77,36 @@ class _RegisterState extends State<Register> {
                         passText.textFormField(),
                         SizedBox(height: 20),
                         cpass.textFormField(),
+                        SizedBox(height: 10),
+                        Text(
+                          (erroMessage.length != 0) ? erroMessage : "",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
                         SizedBox(height: 20),
                         RaisedButton(
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
-                              loading(context);
-                              bool register = await auth.signUp(
+                              //loading(context);
+                              String register = await auth.signUp(
                                 emailText.value,
                                 passText.value,
                                 pseudo.value,
                               );
                               if (register != null) {
-                                Navigator.of(context).pop();
-                                if (register) Navigator.of(context).pop();
+                                //Navigator.of(context).pop();
+                                if (register.length != 0) {
+                                  setState(() {
+                                    erroMessage = register;
+                                  });
+                                } else {
+                                  Navigator.of(context).pop();
+                                  setState(() {
+                                    erroMessage = "";
+                                  });
+                                }
                               }
                             }
                           },

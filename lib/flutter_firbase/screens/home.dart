@@ -48,12 +48,11 @@ class _HomeState extends State<Home> {
                   CircleAvatar(
                     radius: 14,
                     backgroundColor: Colors.white,
-                    backgroundImage: userm.image != null
-                        ? NetworkImage(userm.image)
-                        : Image(
+                    backgroundImage: NetworkImage(userm.image),
+                    /*: Image(
                             image:
                                 AssetImage('images/default-avatar-profile.jpg'),
-                          ),
+                          ),*/
                     child: userm.image != null
                         ? Container()
                         : Icon(

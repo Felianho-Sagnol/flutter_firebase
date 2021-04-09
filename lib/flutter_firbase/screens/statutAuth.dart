@@ -29,7 +29,11 @@ class _StatutState extends State<Statut> {
   Widget build(BuildContext context) {
     getUser();
     return user == null
-        ? Login()
+        ? StreamProvider<UserModel>.value(
+            value: DbServices().getCurentUser,
+            child: Login(),
+            initialData: userm,
+          )
         : StreamProvider<UserModel>.value(
             value: DbServices().getCurentUser,
             child: Home(),

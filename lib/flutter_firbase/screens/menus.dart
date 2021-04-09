@@ -25,11 +25,12 @@ class _MenuState extends State<Menu> {
             accountEmail: Text(user.email ?? "Aucun email"),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.white,
-              backgroundImage: user.image != null
+              backgroundImage: NetworkImage(user.image),
+              /*user.image != null
                   ? NetworkImage(user.image)
                   : Image(
                       image: AssetImage('images/default-avatar-profile.jpg'),
-                    ),
+                    ),*/
               child: Stack(
                 children: [
                   if (user.image == null)
